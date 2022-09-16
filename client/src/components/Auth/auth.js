@@ -53,6 +53,7 @@ const Auth = () => {
       dispatch({ type: AUTH, data: { result, token } });
 
       navigateTo("/");
+      // window.location.reload(navigateTo("/"));
     } catch (error) {
       console.log(error);
     }
