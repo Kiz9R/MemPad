@@ -10,6 +10,7 @@ const cors = require("cors");
 const connectdb = require("./db/connect");
 
 const postRoutes = require("./routes/post");
+const userRoutes = require("./routes/users");
 
 // Import End
 
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/post", postRoutes);
+app.use("/user", userRoutes);
 
 // mongodb
 

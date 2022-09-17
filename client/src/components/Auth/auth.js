@@ -14,20 +14,42 @@ import { useDispatch } from "react-redux";
 import Icon from "./icon";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Input from "./input";
+import { signup, signin } from "../../actions/auth";
 import { AUTH } from "../../constants/actionTypes";
 import useStyles from "./styles";
+
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 const Auth = () => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState(initialState);
   const [isSignUp, setIsSignUp] = useState(false);
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
 
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSignUp) {
+      dispatch(signup(formData, navigateTo));
+    } else {
+      dispatch(signin(formData, navigateTo));
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const switchMode = () => {
     setIsSignUp((current) => !current);
     handleShowPassword(false);
@@ -81,7 +103,12 @@ const Auth = () => {
                   half
                 />
 
-                <Input name="lastName" label="Last Name" half />
+                <Input
+                  name="lastName"
+                  label="Last Name"
+                  handleChange={handleChange}
+                  half
+                />
               </>
             )}
             <Input
