@@ -52,7 +52,7 @@ const Auth = () => {
 
   const switchMode = () => {
     setIsSignUp((current) => !current);
-    handleShowPassword(false);
+    setShowPassword(false);
   };
   // GOOGLE AUTH
 
