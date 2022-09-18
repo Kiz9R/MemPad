@@ -2,9 +2,8 @@ const jwt = require("jsonwebtoken");
 
 const auth = async (req, res, next) => {
   try {
-    // console.log(req.headers);
     const token = req.headers.authorization.split(" ")[1];
-    const isCustomAuth = token.lenght < 500;
+    const isCustomAuth = token.length < 500;
     let decodedData;
     if (token && isCustomAuth) {
       decodedData = jwt.verify(token, process.env.JWT_SECRET);

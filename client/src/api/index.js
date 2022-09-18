@@ -11,7 +11,6 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-//  for local devops..
 // const url = "https://mempad.herokuapp.com/post";
 
 export const fetchPosts = () => API.get("/post");
