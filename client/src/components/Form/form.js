@@ -8,12 +8,20 @@ import useStyles from "./styles";
 
 const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
-    creator: "",
     title: "",
     message: "",
     tags: "",
     selectedFile: "",
   });
+  // const [postData, setPostData] = useState({
+  //   creator: "",
+  //   title: "",
+  //   message: "",
+  //   tags: "",
+  //   selectedFile: "",
+  // });
+
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   const post = useSelector((state) =>
     currentId ? state.posts.find((p) => p._id === currentId) : null
@@ -31,9 +39,11 @@ const Form = ({ currentId, setCurrentId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (currentId) {
-      dispatch(updatePost(currentId, postData));
+      dispatch(
+        updatePost(currentId, { ...postData, name: user?.result?.name })
+      );
     } else {
-      dispatch(createPost(postData));
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
     }
 
     clear();
@@ -42,13 +52,29 @@ const Form = ({ currentId, setCurrentId }) => {
   const clear = () => {
     setCurrentId(null);
     setPostData({
-      creator: "",
       title: "",
       message: "",
       tags: "",
       selectedFile: "",
     });
+    // setPostData({
+    //   creator: "",
+    //   title: "",
+    //   message: "",
+    //   tags: "",
+    //   selectedFile: "",
+    // });
   };
+
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Please Sign In to create your own memories
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -61,7 +87,7 @@ const Form = ({ currentId, setCurrentId }) => {
         <Typography variant="h4" className={classes.typography}>
           {currentId ? "Editing" : "Creating"} Memory
         </Typography>
-        <TextField
+        {/* <TextField
           className={classes.textField}
           name="creator"
           variant="filled"
@@ -71,7 +97,17 @@ const Form = ({ currentId, setCurrentId }) => {
           onChange={(e) =>
             setPostData({ ...postData, creator: e.target.value })
           }
+        /> */}
+
+        <TextField
+          name="title"
+          variant="filled"
+          label="Title"
+          fullWidth
+          value={postData.title}
+          onChange={(e) => setPostData({ ...postData, title: e.target.value })}
         />
+
         <TextField
           name="message"
           variant="filled"
@@ -85,14 +121,6 @@ const Form = ({ currentId, setCurrentId }) => {
           }
         />
 
-        <TextField
-          name="title"
-          variant="filled"
-          label="Title"
-          fullWidth
-          value={postData.title}
-          onChange={(e) => setPostData({ ...postData, title: e.target.value })}
-        />
         <TextField
           name="tags"
           variant="filled"
