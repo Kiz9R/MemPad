@@ -6,7 +6,7 @@ export default makeStyles((theme) => ({
     borderRadius: 15,
     margin: "30px 0",
     display: "flex",
-    flexDirection: "row",
+    // flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     padding: "10px 50px",
@@ -19,9 +19,13 @@ export default makeStyles((theme) => ({
     fontSize: "2rem",
   },
 
-  [theme.breakpoints.up("sm")]: {
-    heading: { fontSize: "4rem" },
+  [theme.breakpoints.up("md")]: {
+    appBar: {
+      flexDirection: "row",
+    },
+    heading: { fontSize: "3rem" },
   },
+
   image: {
     marginLeft: "15px",
   },
@@ -35,13 +39,33 @@ export default makeStyles((theme) => ({
     justifyContent: "space-between",
     width: "400px",
   },
+  signin: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100wv",
+  },
   userName: {
     display: "flex",
     alignItems: "center",
+    textTransform: "capitalize",
+    fontWeight: "bold",
+    color: "#6e5774",
   },
   brandContainer: {
     display: "flex",
     alignItems: "center",
+  },
+
+  [theme.breakpoints.down("sm")]: {
+    profile: {
+      justifyContent: "space-evenly",
+    },
+    profile2: {
+      display: "flex",
+      justifyContent: "center",
+      width: "400px",
+    },
   },
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
